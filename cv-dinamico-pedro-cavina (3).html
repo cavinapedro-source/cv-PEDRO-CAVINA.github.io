@@ -1,0 +1,1057 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pedro Cavina | CV Dinámico</title>
+<style>
+  :root {
+    --bg: #070b14;
+    --surface: rgba(15, 23, 42, 0.76);
+    --surface-hover: rgba(30, 41, 59, 0.85);
+    --border: rgba(148, 163, 184, 0.16);
+    --cyan: #38bdf8;
+    --teal: #2dd4bf;
+    --indigo: #818cf8;
+    --amber: #fbbf24;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --glow: 0 0 28px rgba(56, 189, 248, 0.32);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Fondo dinámico con grilla sutil y orbes de luz */
+  .bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: 
+      radial-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+      radial-gradient(circle at 15% 20%, rgba(37, 99, 235, 0.22), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(13, 148, 136, 0.22), transparent 45%);
+    background-size: 32px 32px, 100% 100%, 100% 100%;
+    pointer-events: none;
+  }
+
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(95px);
+    opacity: 0.4;
+    z-index: -1;
+    pointer-events: none;
+    animation: drift 16s infinite alternate ease-in-out;
+  }
+  .orb-a { width: 380px; height: 380px; background: #0284c7; top: -80px; left: -60px; }
+  .orb-b { width: 440px; height: 440px; background: #0d9488; bottom: -100px; right: -80px; animation-delay: -6s; }
+  .orb-c { width: 300px; height: 300px; background: #4f46e5; top: 45%; left: 60%; animation-delay: -11s; }
+
+  @keyframes drift {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(45px, -45px) scale(1.12); }
+  }
+
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* Encabezado Hero */
+  header {
+    padding: 38px 0 24px;
+    text-align: center;
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: rgba(45, 212, 191, 0.12);
+    border: 1px solid rgba(45, 212, 191, 0.35);
+    color: var(--teal);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    margin-bottom: 12px;
+    animation: slideDown 0.6s ease-out;
+  }
+
+  .dot-live {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 10px var(--teal);
+    animation: blink 1.6s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.5); }
+  }
+
+  h1 {
+    font-size: clamp(34px, 6vw, 54px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #ffffff 25%, #38bdf8 65%, #2dd4bf 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: slideDown 0.7s ease-out;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: clamp(15px, 2.2vw, 18px);
+    margin-top: 4px;
+    animation: slideDown 0.8s ease-out;
+  }
+
+  /* Menú de navegación */
+  .nav-bar-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 26px;
+    position: sticky;
+    top: 12px;
+    z-index: 50;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 18px;
+    background: rgba(10, 15, 28, 0.86);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid var(--border);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5);
+  }
+
+  nav button {
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  nav button:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.07);
+    transform: translateY(-2px);
+  }
+
+  nav button.active {
+    background: linear-gradient(135deg, var(--cyan), var(--teal));
+    color: #06101d;
+    box-shadow: var(--glow);
+    transform: translateY(-1px);
+  }
+
+  /* Vistas / Módulos */
+  main {
+    padding: 18px 0 64px;
+  }
+
+  .view {
+    display: none;
+    background: var(--surface);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: clamp(20px, 4vw, 38px);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  }
+
+  .view.active {
+    display: block;
+    animation: revealView 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes revealView {
+    from { opacity: 0; transform: translateY(22px) scale(0.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .view-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .view-top h2 {
+    font-size: clamp(22px, 3.5vw, 28px);
+    background: linear-gradient(90deg, #fff, #7dd3fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .view-hint {
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+
+  .action-btn {
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: var(--cyan);
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .action-btn:hover {
+    background: var(--cyan);
+    color: #06101d;
+    transform: translateY(-1px);
+  }
+
+  /* =========================================================
+     MÓDULO 1: PERFIL INTERACTIVO (NODO CENTRAL + RAMAS)
+     ========================================================= */
+  .concept-map {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .core-node {
+    position: relative;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(45, 212, 191, 0.18));
+    border: 2px solid var(--cyan);
+    border-radius: 20px;
+    padding: 20px 28px;
+    text-align: center;
+    max-width: 560px;
+    width: 100%;
+    box-shadow: var(--glow);
+    transition: transform 0.3s ease;
+  }
+
+  .core-node:hover {
+    transform: scale(1.02);
+  }
+
+  .core-node h3 {
+    font-size: 21px;
+    color: #fff;
+  }
+
+  .core-node p {
+    font-size: 14.5px;
+    color: #cbd5e1;
+    margin-top: 4px;
+  }
+
+  .core-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .core-links a, .core-links span {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid var(--border);
+    color: var(--cyan);
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  .core-links a:hover {
+    background: var(--cyan);
+    color: #06101d;
+  }
+
+  /* Conectores visuales */
+  .map-connector {
+    width: 2px;
+    height: 22px;
+    background: linear-gradient(to bottom, var(--cyan), var(--teal));
+    margin: -14px auto;
+  }
+
+  .nodes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 16px;
+    width: 100%;
+  }
+
+  .map-node {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .map-node::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 4px; height: 100%;
+    background: linear-gradient(to bottom, var(--cyan), var(--teal));
+    opacity: 0.6;
+    transition: width 0.3s ease;
+  }
+
+  .map-node:hover {
+    transform: translateY(-4px);
+    background: var(--surface-hover);
+    border-color: rgba(56, 189, 248, 0.45);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  }
+
+  .map-node.expanded {
+    border-color: var(--teal);
+    background: rgba(30, 41, 59, 0.92);
+  }
+
+  .node-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .node-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 16.5px;
+    color: #fff;
+  }
+
+  .node-badge {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: rgba(56, 189, 248, 0.14);
+    color: var(--cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+  }
+
+  .node-toggle {
+    font-size: 12px;
+    color: var(--teal);
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(45, 212, 191, 0.12);
+    transition: transform 0.3s ease;
+  }
+
+  .map-node.expanded .node-toggle {
+    background: var(--teal);
+    color: #06101d;
+  }
+
+  .node-preview {
+    font-size: 13.5px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  .node-detail {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .map-node.expanded .node-detail {
+    grid-template-rows: 1fr;
+  }
+
+  .node-detail-inner {
+    overflow: hidden;
+  }
+
+  .node-detail-body {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 14.5px;
+    color: #e2e8f0;
+  }
+
+  /* =========================================================
+     ACORDEONES / PESTAÑAS DESPLEGABLES (CV ES / EN)
+     ========================================================= */
+  .contact-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 15px;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+  }
+
+  a.chip:hover {
+    border-color: var(--cyan);
+    background: rgba(56, 189, 248, 0.14);
+    transform: translateY(-2px);
+  }
+
+  .accordion-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .acc-item {
+    border-radius: 15px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.03);
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .acc-item.open {
+    border-color: rgba(56, 189, 248, 0.45);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
+  }
+
+  .acc-btn {
+    width: 100%;
+    padding: 16px 20px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .acc-btn:hover {
+    color: var(--cyan);
+  }
+
+  .acc-arrow {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s;
+  }
+
+  .acc-item.open .acc-arrow {
+    transform: rotate(180deg);
+    background: var(--cyan);
+    color: #06101d;
+  }
+
+  .acc-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .acc-item.open .acc-panel {
+    grid-template-rows: 1fr;
+  }
+
+  .acc-inner {
+    overflow: hidden;
+  }
+
+  .acc-body {
+    padding: 0 20px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 14px;
+    color: #cbd5e1;
+  }
+
+  .timeline {
+    border-left: 2px solid var(--cyan);
+    padding-left: 16px;
+    margin: 10px 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: -6px; top: 5px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 8px var(--teal);
+  }
+  .timeline strong { display: block; color: #fff; }
+  .timeline .date { font-size: 13px; color: var(--cyan); font-weight: 600; }
+
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #e0f2fe;
+    font-size: 13.5px;
+    font-weight: 600;
+    transition: transform 0.25s ease, background 0.25s ease;
+  }
+  .pill:hover {
+    transform: translateY(-3px) scale(1.05);
+    background: var(--cyan);
+    color: #06101d;
+  }
+
+  /* =========================================================
+     CARTAS CON SELECTOR BILINGÜE INTEGRADO
+     ========================================================= */
+  .lang-switch {
+    display: inline-flex;
+    background: rgba(0, 0, 0, 0.35);
+    padding: 4px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+  .lang-switch button {
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    padding: 7px 14px;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .lang-switch button.active {
+    background: var(--indigo);
+    color: #fff;
+  }
+
+  .letter-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: clamp(18px, 3vw, 28px);
+  }
+  .letter-box p {
+    margin-bottom: 14px;
+    color: #e2e8f0;
+  }
+  .letter-sign {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border);
+    color: var(--teal);
+  }
+
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    padding-bottom: 34px;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-canvas"></div>
+<div class="orb orb-a"></div>
+<div class="orb orb-b"></div>
+<div class="orb orb-c"></div>
+
+<header>
+  <div class="wrap">
+    <div class="status-pill"><span class="dot-live"></span> CV Dinámico</div>
+    <h1>Pedro Cavina</h1>
+    <p class="subtitle">Estudiante · Especialización en Informática · Villa Allende, Córdoba</p>
+
+    <div class="nav-bar-wrap">
+      <nav aria-label="Navegación principal del CV dinámico">
+        <button class="active" data-view="perfil-view">👤 Perfil</button>
+        <button data-view="cv-es-view">📄 CV Español</button>
+        <button data-view="cv-en-view">🌐 CV English</button>
+        <button data-view="letters-view">✉️ Cartas (ES / EN)</button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- VISTA 1: PERFIL INTERACTIVO -->
+  <section id="perfil-view" class="view active">
+    <div class="view-top">
+      <div>
+        <h2>Perfil Profesional</h2>
+        <p class="view-hint">Haz clic en cada tarjeta para desplegar su contenido y explorar la información.</p>
+      </div>
+      <button class="action-btn" id="toggleMapNodes" type="button">Expandir / Contraer todo</button>
+    </div>
+
+    <div class="concept-map">
+      <!-- Nodo Central -->
+      <div class="core-node">
+        <h3>Pedro Cavina — Perfil Tecnológico</h3>
+        <p>Estudiante de Informática · Proactivo, organizado, responsable y orientado al trabajo en equipo.</p>
+        <div class="core-links">
+          <a href="tel:+543517301668">☎ 351 730 1668</a>
+          <a href="mailto:pedrocavinacole@gmail.com">✉ pedrocavinacole@gmail.com</a>
+          <span>📍 Pernambuco 486, Villa Allende</span>
+          <span>🎂 15/07/2008</span>
+        </div>
+      </div>
+
+      <div class="map-connector"></div>
+
+      <!-- Tarjetas Ramificadas Desplegables -->
+      <div class="nodes-grid">
+        <!-- Educación -->
+        <div class="map-node expanded">
+          <div class="node-head">
+            <div class="node-title"><span class="node-badge">🎓</span> Formación Académica</div>
+            <span class="node-toggle">− Cerrar</span>
+          </div>
+          <p class="node-preview">Especialización en Informática &amp; base técnica.</p>
+          <div class="node-detail">
+            <div class="node-detail-inner">
+              <div class="node-detail-body">
+                <div class="timeline">
+                  <strong>Instituto Nuestra Señora de las Mercedes</strong>
+                  <span class="date">2023 – Actualidad · Especialización en Informática</span>
+                </div>
+                <div class="timeline">
+                  <strong>Instituto Paula Albarracín de Sarmiento</strong>
+                  <span class="date">2021 – 2023 · Técnico en Construcción</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Habilidades -->
+        <div class="map-node expanded">
+          <div class="node-head">
+            <div class="node-title"><span class="node-badge">⚡</span> Stack &amp; Habilidades</div>
+            <span class="node-toggle">− Cerrar</span>
+          </div>
+          <p class="node-preview">Herramientas digitales, programación y soft skills.</p>
+          <div class="node-detail">
+            <div class="node-detail-inner">
+              <div class="node-detail-body">
+                <div class="pills">
+                  <span class="pill">Python</span>
+                  <span class="pill">HTML</span>
+                  <span class="pill">Microsoft Word</span>
+                  <span class="pill">Excel</span>
+                  <span class="pill">Redes sociales</span>
+                  <span class="pill">Trabajo en equipo</span>
+                  <span class="pill">Comunicación</span>
+                  <span class="pill">Resolución de problemas</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Experiencia -->
+        <div class="map-node">
+          <div class="node-head">
+            <div class="node-title"><span class="node-badge">💼</span> Experiencia &amp; Prácticas</div>
+            <span class="node-toggle">+ Info</span>
+          </div>
+          <p class="node-preview">Pasantías, atención al cliente y proyectos escolares.</p>
+          <div class="node-detail">
+            <div class="node-detail-inner">
+              <div class="node-detail-body">
+                <div class="timeline">
+                  <strong>Gym Center Bienestar, Salud y Deporte – Unquillo</strong>
+                  <span class="date">Pasantías · Agosto 2026</span>
+                  <p>Administración de planes y acciones de trabajo, brindando atención al cliente.</p>
+                </div>
+                <p style="margin-top:8px;"><strong>Proyectos escolares:</strong> Actividades prácticas que fortalecieron el trabajo colaborativo y la resolución de problemas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Idiomas -->
+        <div class="map-node">
+          <div class="node-head">
+            <div class="node-title"><span class="node-badge">🌍</span> Idiomas</div>
+            <span class="node-toggle">+ Info</span>
+          </div>
+          <p class="node-preview">Español nativo e Inglés nivel B2.</p>
+          <div class="node-detail">
+            <div class="node-detail-inner">
+              <div class="node-detail-body">
+                <p><strong>Español:</strong> Nativo.</p>
+                <p style="margin-top:6px;"><strong>Inglés:</strong> Intermedio / Avanzado — Nivel B2 (Go On Institute).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Disponibilidad -->
+        <div class="map-node">
+          <div class="node-head">
+            <div class="node-title"><span class="node-badge">🕒</span> Disponibilidad &amp; Movilidad</div>
+            <span class="node-toggle">+ Info</span>
+          </div>
+          <p class="node-preview">Horarios flexibles por la tarde y fines de semana.</p>
+          <div class="node-detail">
+            <div class="node-detail-inner">
+              <div class="node-detail-body">
+                <p><strong>Lunes a Viernes:</strong> 15:00 a 21:00 hs (3 PM – 9 PM).</p>
+                <p style="margin-top:6px;"><strong>Sábados y Domingos:</strong> 9:00 a 21:00 hs (9 AM – 9 PM).</p>
+                <p style="margin-top:6px;"><strong>Movilidad:</strong> Movilidad propia · Licencia de conducir B.1 vigente.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISTA 2: CV EN ESPAÑOL CON PESTAÑAS DESPLEGABLES -->
+  <section id="cv-es-view" class="view">
+    <div class="view-top">
+      <div>
+        <h2>Currículum Vitae (Español)</h2>
+        <p class="view-hint">Despliega cada sección según lo que desees consultar.</p>
+      </div>
+      <button class="action-btn toggle-acc-btn" type="button">Desplegar / Contraer todo</button>
+    </div>
+
+    <div class="contact-strip">
+      <a class="chip" href="tel:+543517301668">☎ 351 730 1668</a>
+      <a class="chip" href="mailto:pedrocavinacole@gmail.com">✉ pedrocavinacole@gmail.com</a>
+      <span class="chip">📍 Villa Allende, Córdoba</span>
+    </div>
+
+    <div class="accordion-stack">
+      <div class="acc-item open">
+        <button class="acc-btn" type="button"><span>👤 Perfil</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel"><div class="acc-inner"><div class="acc-body">
+          <p>Persona proactiva, organizada y responsable, con buenas relaciones interpersonales. Estoy predispuesto a aprender nuevas habilidades y ganar experiencia en el área de tecnología. Disfruto trabajar en equipo y resolver problemas.</p>
+        </div></div></div>
+      </div>
+
+      <div class="acc-item open">
+        <button class="acc-btn" type="button"><span>🎓 Educación</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel"><div class="acc-inner"><div class="acc-body">
+          <div class="timeline">
+            <strong>Instituto Nuestra Señora de las Mercedes</strong>
+            <span class="date">2023 – Actualidad · Especialización en Informática</span>
+          </div>
+          <div class="timeline">
+            <strong>Instituto Paula Albarracín de Sarmiento</strong>
+            <span class="date">2021 – 2023 · Técnico en Construcción</span>
+          </div>
+        </div></div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button"><span>⚡ Habilidades</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel"><div class="acc-inner"><div class="acc-body">
+          <div class="pills">
+            <span class="pill">Python</span>
+            <span class="pill">HTML</span>
+            <span class="pill">Microsoft Word</span>
+            <span class="pill">Redes sociales</span>
+            <span class="pill">Trabajo en equipo</span>
+            <span class="pill">Comunicación</span>
+          </div>
+        </div></div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button"><span>🌍 Idiomas</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel"><div class="acc-inner"><div class="acc-body">
+          <p>Español: nativo · Inglés: intermedio/avanzado</p>
+        </div></div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button"><span>💼 Experiencia</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel"><div class="acc-inner"><div class="acc-body">
+          <div class="timeline">
+            <strong>Gym Center Bienestar, Salud y Deporte – Unquillo</strong>
+            <span class="date">Pasantías · Agosto 2026</span>
+            <p>Administración de planes y acciones de trabajo, brindando atención al cliente.</p>
+          </div>
+        </div></div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button"><span>ℹ️ Información adicional</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel"><div class="acc-inner"><div class="acc-body">
+          <p>Disponibilidad: lunes a viernes de 15:00 a 21:00; sábados y domingos de 9:00 a 21:00.</p>
+          <p style="margin-top:8px;">Movilidad propia · Licencia de conducir B.1 vigente.</p>
+        </div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISTA 3: CV IN ENGLISH CON PESTAÑAS DESPLEGABLES -->
+  <section id="cv-en-view" class="view" lang="en">
+    <div class="view-top">
+      <div>
+        <h2>Curriculum Vitae (English)</h2>
+        <p class="view-hint">Click any section to expand or collapse details.</p>
+      </div>
+      <button class="action-btn toggle-acc-btn" type="button">Expand / Collapse all</button>
+    </div>
+
+    <div class="contact-strip">
+      <a class="chip" href="tel:+543517301668">☎ +54 9 351 730 1668</a>
+      <a class="chip" href="mailto:pedrocavinacole@gmail.com">✉ pedrocavinacole@gmail.com</a>
+      <span class="chip">📍 Villa Allende, Córdoba, Argentina</span>
+    </div>
+
+    <div class="accordion-stack">
+      <div class="acc-item open">
+        <button class="acc-btn" type="button"><span>👤 Profile</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel"><div class="acc-inner"><div class="acc-body">
+          <p>Responsible and hardworking secondary school student, interested in learning new skills and gaining work experience in the computer science field. I enjoy working in a team and solving problems.</p>
+        </div></div></div>
+      </div>
+
+      <div class="acc-item open">
+        <button class="acc-btn" type="button"><span>🎓 Education</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel"><div class="acc-inner"><div class="acc-body">
+          <div class="timeline">
+            <strong>Instituto Nuestra Señora de las Mercedes</strong>
+            <span class="date">2023 – Present · Information Technology</span>
+          </div>
+          <div class="timeline">
+            <strong>Instituto Paula Albarracín de Sarmiento</strong>
+            <span class="date">2021 – 2023 · Construction Technician</span>
+          </div>
+        </div></div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button"><span>💻 IT Skills &amp; Personal Skills</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel"><div class="acc-inner"><div class="acc-body">
+          <div class="pills" style="margin-bottom:12px;">
+            <span class="pill">Python</span>
+            <span class="pill">HTML</span>
+            <span class="pill">Microsoft Word</span>
+            <span class="pill">Excel</span>
+          </div>
+          <p><strong>Personal Skills:</strong> Responsible, active, sociable, kind, cooperative and disciplined.</p>
+        </div></div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button"><span>🌍 Languages &amp; Experience</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel"><div class="acc-inner"><div class="acc-body">
+          <p><strong>Languages:</strong> Spanish: Native · English: B2 (Intermediate), Go On Institute</p>
+          <p style="margin-top:8px;"><strong>Experience:</strong> School projects and activities that helped develop teamwork and problem-solving skills.</p>
+        </div></div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button"><span>ℹ️ Additional Information</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel"><div class="acc-inner"><div class="acc-body">
+          <p>Date of birth: 15 July 2008.</p>
+          <p style="margin-top:6px;">Availability: Monday to Friday, 3 PM–9 PM; Saturday and Sunday, 9 AM–9 PM.</p>
+          <p style="margin-top:6px;">Address: Pernambuco 486, Villa Allende.</p>
+        </div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISTA 4: CARTAS DE PRESENTACIÓN (CON CONMUTADOR DE IDIOMA) -->
+  <section id="letters-view" class="view">
+    <div class="view-top">
+      <div>
+        <h2>Carta de Presentación / Cover Letter</h2>
+        <p class="view-hint">Alterna instantáneamente entre la versión en español e inglés.</p>
+      </div>
+      <div class="lang-switch" role="tablist">
+        <button class="active" data-letter="letter-es" type="button">🇪🇸 Español</button>
+        <button data-letter="letter-en" type="button">🇬🇧 English</button>
+      </div>
+    </div>
+
+    <div id="letter-es" class="letter-box">
+      <p>Estimada empresa especializada en informática:</p>
+      <p>Mi nombre es Pedro Cavina y actualmente soy estudiante del Instituto Nuestra Señora de las Mercedes, donde me especializo en Informática. Me considero una persona responsable y trabajadora, a la que le gusta aprender cosas nuevas.</p>
+      <p>Me comunico con ustedes para expresar mi interés en formar parte de su empresa. Estoy motivado por ganar experiencia laboral, desarrollar nuevas habilidades y aprender más sobre el mundo profesional, especialmente en el área de tecnología.</p>
+      <p>Tengo conocimientos de Python, HTML, Microsoft Word y Excel. También cuento con habilidades de comunicación, trabajo en equipo y resolución de problemas. Me considero una persona amable, activa, cooperativa y disciplinada.</p>
+      <p>Aunque todavía no tengo experiencia laboral formal, adquirí conocimientos prácticos mediante proyectos y actividades escolares. Estas experiencias me ayudaron a mejorar mi capacidad para trabajar con otras personas y resolver problemas.</p>
+      <p>Muchas gracias por su tiempo y por considerar mi solicitud. Me gustaría tener la oportunidad de formar parte de su equipo y aportar mis conocimientos mientras continúo aprendiendo y mejorando.</p>
+      <div class="letter-sign">Atentamente,<br><strong>Pedro Cavina</strong></div>
+    </div>
+
+    <div id="letter-en" class="letter-box" lang="en" style="display:none;">
+      <p>Dear IT company,</p>
+      <p>My name is Pedro Cavina, and I am currently a student at Instituto Nuestra Señora de las Mercedes, specializing in Computer Science. I consider myself a responsible and hardworking person who enjoys learning new things.</p>
+      <p>I am writing to express my interest in joining your company. I am motivated to gain work experience, develop new skills and learn more about the professional world, especially in the technology area.</p>
+      <p>I have knowledge of Python, HTML, Microsoft Word and Excel. I also have good communication, teamwork and problem-solving skills. I am friendly, active, cooperative and disciplined.</p>
+      <p>Although I do not have formal work experience yet, I have gained practical knowledge through school projects and activities. These experiences have helped me improve my ability to work with others and solve problems.</p>
+      <p>Thank you for your time and consideration. I would be very happy to have the opportunity to join your team and contribute while continuing to learn and improve.</p>
+      <div class="letter-sign">Sincerely,<br><strong>Pedro Cavina</strong></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>Pedro Cavina · CV Dinámico · Informática</footer>
+
+<script>
+  // 1. Navegación principal
+  const navButtons = [...document.querySelectorAll('nav button')];
+  const views = [...document.querySelectorAll('.view')];
+
+  function activateView(viewId) {
+    views.forEach(v => {
+      if (v.id === viewId) {
+        v.classList.remove('active');
+        void v.offsetWidth;
+        v.classList.add('active');
+      } else {
+        v.classList.remove('active');
+      }
+    });
+    navButtons.forEach(b => b.classList.toggle('active', b.dataset.view === viewId));
+  }
+
+  navButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      activateView(btn.dataset.view);
+      history.replaceState(null, '', '#' + btn.dataset.view);
+    });
+  });
+
+  const initialHash = location.hash.slice(1);
+  if (document.getElementById(initialHash)) activateView(initialHash);
+
+  // 2. Tarjetas interactivas del Perfil
+  document.querySelectorAll('.map-node').forEach(node => {
+    node.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') return;
+      node.classList.toggle('expanded');
+      const badge = node.querySelector('.node-toggle');
+      if (badge) badge.textContent = node.classList.contains('expanded') ? '− Cerrar' : '+ Info';
+    });
+  });
+
+  const toggleMapBtn = document.getElementById('toggleMapNodes');
+  if (toggleMapBtn) {
+    toggleMapBtn.addEventListener('click', () => {
+      const nodes = [...document.querySelectorAll('.map-node')];
+      const shouldOpen = nodes.some(n => !n.classList.contains('expanded'));
+      nodes.forEach(n => {
+        n.classList.toggle('expanded', shouldOpen);
+        const badge = n.querySelector('.node-toggle');
+        if (badge) badge.textContent = shouldOpen ? '− Cerrar' : '+ Info';
+      });
+    });
+  }
+
+  // 3. Acordeones desplegables
+  document.querySelectorAll('.acc-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.closest('.acc-item').classList.toggle('open');
+    });
+  });
+
+  document.querySelectorAll('.toggle-acc-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const container = btn.closest('.view');
+      const items = [...container.querySelectorAll('.acc-item')];
+      const shouldOpen = items.some(i => !i.classList.contains('open'));
+      items.forEach(i => i.classList.toggle('open', shouldOpen));
+    });
+  });
+
+  // 4. Conmutador de idioma en Cartas
+  document.querySelectorAll('.lang-switch button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.lang-switch button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('letter-es').style.display = btn.dataset.letter === 'letter-es' ? 'block' : 'none';
+      document.getElementById('letter-en').style.display = btn.dataset.letter === 'letter-en' ? 'block' : 'none';
+    });
+  });
+</script>
+</body>
+</html>
